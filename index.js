@@ -34,6 +34,7 @@ const corsOptions = {
     origin: [
         // LOCALS:
         'http://localhost:80',
+        'http://127.0.0.1:5173',
 
         // REMOTES:
         'http://165.227.166.214:80',

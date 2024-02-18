@@ -2,7 +2,6 @@
 const ObjectId = require('mongodb').ObjectId
 const bcrypt = require('bcrypt')
 const Token = require('../../models/Token')
-const config = require('../../config')
 
 const emailService = require('../../services/email.service')
 const authService = require('../auth/auth.service')
