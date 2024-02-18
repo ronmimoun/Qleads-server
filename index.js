@@ -37,7 +37,9 @@ const corsOptions = {
         'http://localhost:80',
 
         // REMOTES:
-        'http://165.227.166.214:80',
+        'http://165.227.166.214:8000',
+        'https://qleads.mobi',
+        'https://qleads.mobi:80',
     ],
     credentials: true
 }
