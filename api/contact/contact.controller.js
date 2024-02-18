@@ -1,9 +1,6 @@
 // Services
-const dbService = require('../../services/db.service');
 const contactService = require('./contact.service')
 const { getFirstLetterUppercase } = require('../../services/util.service');
-
-const ObjectId = require('mongodb').ObjectId
 
 // GET USER CONTACTS 
 async function getUserContacts(req, res) {

@@ -2,11 +2,10 @@
 const requestStatus = require('../../constants/requestStatus')
 
 // Model
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 const ContactRequest = require("./contactRequest.model");
 
 // Services
-const dbService = require('../../services/db.service')
 const userService = require('../user/user.service')
 const contactService = require('../contact/contact.service')
 

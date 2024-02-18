@@ -1,4 +1,3 @@
-const ObjectId = require('mongodb').ObjectId
 const SupportChat = require('./supportChat.model')
 const userService = require('../user/user.service')
 const apiUtilService = require('../../utils/api.utils')

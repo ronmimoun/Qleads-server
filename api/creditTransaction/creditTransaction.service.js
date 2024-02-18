@@ -1,16 +1,11 @@
-// const dbService = require('../../services/db.service')
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 const CreditTransaction = require('./creditTransaction.model')
 
-// const COLLECTION_KEY = 'credit_transaction'
 
 async function query() {
     try {
         const sales = await CreditTransaction.find({})
         return sales
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // const entities = await collection.find({}).toArray()
-        // return entities
     } catch (err) {
         throw err
     }
@@ -30,9 +25,6 @@ async function update(entity) {
         );
 
         return updatedSale
-
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // await collection.updateOne({ '_id': updatedEntity._id }, { $set: updatedEntity })
     } catch (err) {
         throw err
     }
@@ -43,15 +35,6 @@ async function add(credits) {
         // collection = await dbService.getCollection(COLLECTION_KEY)
         const savedCreditTransaction = await CreditTransaction.insertMany(credits)
         return savedCreditTransaction
-
-        // await Promise.all(
-        //     // credits.map(credit => collection.insertOne(credit))
-        //     credits.map(credit => {
-        //         const newJobTitle = new JobTitle(jobTitleToSave)
-        //         const savedJobTitle = await newJobTitle.save()
-        //     })
-        // )
-        // return credits
     } catch (err) {
         throw err
     }
@@ -60,14 +43,10 @@ async function add(credits) {
 async function remove(entityId) {
     try {
         await CreditTransaction.deleteOne({ '_id': ObjectId(entityId) })
-
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // await collection.deleteOne({ '_id': ObjectId(entityId) })
     } catch (err) {
         throw err
     }
 }
-
 
 module.exports = {
     query,

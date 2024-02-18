@@ -1,6 +1,8 @@
 const Cryptr = require('cryptr')
 const User = require('../api/user/user.model')
 const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
+const SimpleJWT = require("../services/jwt.service")
+const mongoose = require("mongoose")
 
 function validateToken(req, res, next) {
     const token = req.cookies.loginToken
@@ -15,16 +17,6 @@ function validateToken(req, res, next) {
     return res.status(401).json({ status: 'error', message: "You are not authenticated!" });
 }
 
-const verifyTokenAndAuthorization = (req, res, next) => {
-    verifyToken(req, res, () => {
-        if (req.user._id === req.params._id || req.user.isAdmin) {
-            next();
-        } else {
-            res.status(403).json({ status: 'error', message: "You are not allowed to do that!" });
-        }
-    });
-};
-
 const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
         if (req.user.isAdmin) {
@@ -35,27 +27,23 @@ const verifyTokenAndAdmin = (req, res, next) => {
     });
 };
 
-const verifyAdmin = async (req, res, next) => {
-    const { user } = JSON.parse(req.body.data)
-    const { username, isAdmin } = user
-    const dbUser = await User.findOne({ username })
-    if (isAdmin && dbUser.username === username) {
-        next();
-    } else {
-        res.status(403).json({ status: 'error', message: "You are not allowed to do that!" });
-    }
-}
-
-const verifyToken = (req, res, next) => {
-    const loginToken = req.cookies.loginToken;
-    if (!loginToken) {
-        return res.status(401).json({ status: 'error', message: "Authentication failed: no token found" });
-    }
-
+const verifyToken = async (req, res, next) => {
     try {
-        const decryptedToken = cryptr.decrypt(loginToken);
-        const user = JSON.parse(decryptedToken);
-        req.user = user;
+        const jwtInstance = new SimpleJWT()
+        let token = req.headers['authorization'] || req.headers['Authorization']
+        if (!token) return res.status(403).json({ status: 'error', message: "You are not authenticated" });
+
+        const tokenIndex = token.indexOf("Bearer ");
+        if (tokenIndex === -1) return res.status(403).json({ status: 'error', message: "You are not authenticated" });
+
+        token = token.slice(tokenIndex + 7);
+        const decoded = jwtInstance.decode(token)
+
+        if (!decoded.userId) return res.status(401).json({ status: 'error', message: "Authentication failed: no token found" });
+
+        const authenticatedUser = await User.findOne({ '_id': mongoose.Types.ObjectId(decoded.userId) })
+
+        req.user = { _id: authenticatedUser._id, isAdmin: authenticatedUser.isAdmin };
         next();
     } catch (err) {
         return res.status(401).json({ status: 'error', message: 'Authentication failed: invalid token' });
@@ -64,9 +52,7 @@ const verifyToken = (req, res, next) => {
 
 module.exports = {
     verifyToken,
-    verifyTokenAndAuthorization,
     verifyTokenAndAdmin,
-    verifyAdmin,
     validateToken,
 };
 

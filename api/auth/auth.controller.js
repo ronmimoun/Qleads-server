@@ -7,6 +7,7 @@ const userService = require('../user/user.service');
 const authService = require('./auth.service')
 const userWaitlistService = require('../userWaitlist/userWaitlist.service')
 const waitlistStatus = require("../../constants/waitlistStatus")
+const SimpleJWT = require("../../services/jwt.service")
 
 
 // REGISTER
@@ -18,11 +19,11 @@ async function register(req, res) {
         const userInDB = await User.findOne({ email: user.email });
         if (userInDB) return res.status(409).send({ status: 'error', message: 'User with given email already exist!' })
 
-        let userToAdd = await userService.create(user)
+        let savedUser = await userService.create(user)
 
-        await userWaitlistService.add(userToAdd)
+        await userWaitlistService.add(savedUser)
 
-        const loginToken = getLoginToken(userToAdd)
+        const loginToken = getLoginToken(savedUser)
         res.cookie('loginToken', loginToken, { sameSite: 'none', secure: true })
         res.status(201).json({ status: 'ok' });
     } catch (err) {
@@ -32,10 +33,10 @@ async function register(req, res) {
 
 //LOGIN
 async function login(req, res) {
-    const { username, password } = req.body
     try {
-
+        const { username, password } = req.body
         const user = await authService.login(username)
+
         if (!user) return res.status(401).json({ message: "User not found", status: 'error' })
         const match = await bcrypt.compare(password, user.password)
         if (!match) return res.status(401).json({ message: "Wrong credentials!", status: 'error' })
@@ -46,11 +47,11 @@ async function login(req, res) {
         else if (user.approveStatus !== waitlistStatus.APPROVED) {
             return res.status(401).json({ message: 'Please wait for account approval', status: 'error' })
         }
-
-        const loginToken = getLoginToken(user)
         delete user.password
-        res.cookie('loginToken', loginToken, { sameSite: 'none', secure: true })
-        res.status(200).json({ status: 'ok', content: user });
+        const jwtInstance = new SimpleJWT()
+        const jwtToken = jwtInstance.encode({ userId: user._id })
+
+        res.status(200).json({ status: 'ok', content: { user, jwtToken } });
     } catch (err) {
         res.status(500).json(err);
     }
@@ -59,20 +60,19 @@ async function login(req, res) {
 // LOGOUT
 async function logout(req, res) {
     try {
-        res.clearCookie('loginToken')
-        res.send({ status: 'ok', message: 'Logged out successfully' })
+        res.status(200).json({ status: 'ok', message: 'Logged out successfully' })
     } catch (err) {
         res.status(500).send({ status: 'error', message: 'Failed to logout' })
     }
 }
 
-async function isAdmin(req, res) {
-    try {
-        res.send({ status: 'ok' })
-    } catch (err) {
-        res.status(500).send({ status: 'error', message: 'Failed to verify' })
-    }
-}
+// async function isAdmin(req, res) {
+//     try {
+//         res.send({ status: 'ok' })
+//     } catch (err) {
+//         res.status(500).send({ status: 'error', message: 'Failed to verify' })
+//     }
+// }
 
 async function recoveryEmail(req, res) {
     try {
@@ -101,7 +101,6 @@ module.exports = {
     register,
     login,
     logout,
-    isAdmin,
     getLoginToken,
     recoveryEmail,
     isValidOTP

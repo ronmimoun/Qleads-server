@@ -1,5 +1,5 @@
 const Category = require('./category.model')
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 
 async function get() {
     try {

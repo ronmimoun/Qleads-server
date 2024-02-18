@@ -28,13 +28,13 @@ const supportChatRoute = require("./api/supportChat/supportChat.routes")
 
 const cors = require("cors");
 const path = require("path");
-
+const { errorMiddleware } = require("./middlewares/globalError.middleware");
 
 const corsOptions = {
     origin: [
         // LOCALS:
-        'http://localhost:80',
         'http://127.0.0.1:5173',
+        'http://localhost:80',
 
         // REMOTES:
         'http://165.227.166.214:80',
@@ -63,6 +63,8 @@ app.use("/api/agentMessage", agentMessage);
 app.use("/api/feedback", feedbackRoute);
 app.use("/api/support_chat", supportChatRoute);
 app.use(express.static('public'));
+
+app.use(errorMiddleware)
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
