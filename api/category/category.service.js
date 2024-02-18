@@ -1,5 +1,5 @@
 const Category = require('./category.model')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 
 async function get() {
     try {
@@ -16,7 +16,7 @@ async function update(category) {
             img: category.img,
             title: category.title,
             cat: category.title.toLowerCase(),
-            _id: ObjectId(category._id),
+            _id: mongoose.Types.ObjectId(category._id),
         }
         const updatedCategory = await Category.findByIdAndUpdate({ '_id': catToSave._id }, { $set: catToSave }, { new: true })
         return updatedCategory
@@ -27,7 +27,7 @@ async function update(category) {
 
 async function remove(catId) {
     try {
-        await Category.deleteOne({ '_id': ObjectId(catId) })
+        await Category.deleteOne({ '_id': mongoose.Types.ObjectId(catId) })
         return catId
     } catch (err) {
         throw err

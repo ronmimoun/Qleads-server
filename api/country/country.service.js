@@ -1,5 +1,5 @@
 const Country = require('./country.model')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 
 async function query() {
     try {
@@ -14,7 +14,7 @@ async function update(entity) {
     try {
         const updatedEntity = {
             ...entity,
-            _id: ObjectId(entity._id),
+            _id: mongoose.Types.ObjectId(entity._id),
         }
 
         const updatedCountry = await Country.findByIdAndUpdate(
@@ -45,7 +45,7 @@ async function add(country) {
 
 async function remove(entityId) {
     try {
-        await Country.deleteOne({ '_id': ObjectId(entityId) })
+        await Country.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
         return entityId
     } catch (err) {
         throw err

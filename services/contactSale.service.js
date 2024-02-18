@@ -1,4 +1,4 @@
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 const ContactSale = require('../models/ContactSale')
 
 async function query(filterBy) {
@@ -12,7 +12,7 @@ async function query(filterBy) {
 
 async function getById(userId) {
     try {
-        const sale = await ContactSale.findOne({ '_id': ObjectId(userId) })
+        const sale = await ContactSale.findOne({ '_id': mongoose.Types.ObjectId(userId) })
         return sale
     } catch (err) {
         throw err
@@ -31,7 +31,7 @@ async function add(contactSale) {
 
 async function remove(entityId) {
     try {
-        await ContactSale.deleteOne({ '_id': ObjectId(entityId) })
+        await ContactSale.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
     } catch (err) {
         throw err
     }

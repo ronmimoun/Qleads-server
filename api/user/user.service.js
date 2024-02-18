@@ -1,5 +1,5 @@
 
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const Token = require('../../models/Token')
 
@@ -35,7 +35,7 @@ async function getById(userId) {
     try {
         if (!userId) throw new Error('User ID is missing')
 
-        const user = await User.findOne({ '_id': ObjectId(userId) })
+        const user = await User.findOne({ '_id': mongoose.Types.ObjectId(userId) })
         if (user) delete user.password
         return user
     } catch (err) {
@@ -47,8 +47,6 @@ async function getByUsername(username) {
     try {
 
         const user = await User.findOne({ username })
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // const user = await collection.findOne({ username })
         return user
     } catch (err) {
         throw err
@@ -58,9 +56,7 @@ async function getByUsername(username) {
 async function remove(userId) {
     try {
         if (!userId) throw new Error('User ID is missing')
-        await User.deleteOne({ '_id': ObjectId(userId) })
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // await collection.deleteOne({ '_id': ObjectId(userId) })
+        await User.deleteOne({ '_id': mongoose.Types.ObjectId(userId) })
     } catch (err) {
         throw err
     }
@@ -89,7 +85,7 @@ async function update(updatedUser) {
             agentMessages: updatedUser.agentMessages,
         }
         const savedUser = await User.findOneAndUpdate(
-            { _id: ObjectId(updatedUser._id) },
+            { _id: mongoose.Types.ObjectId(updatedUser._id) },
             { $set: userToSave },
             { new: true }
         )
@@ -118,8 +114,6 @@ async function add(userCred) {
         const newUser = new User(userToCreate)
 
         await User.insertOne(newUser)
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // await collection.insertOne(newUser)
         return newUser
     } catch (err) {
         throw err
@@ -278,7 +272,7 @@ async function changeUserPassByEmail(email, password) {
 
 async function sendEmailVerification(user) {
     try {
-        let userToken = await Token.findOne({ userId: new ObjectId(user._id) })
+        let userToken = await Token.findOne({ userId: new mongoose.Types.ObjectId(user._id) })
 
         if (!userToken) {
             const token = await new Token({

@@ -1,4 +1,4 @@
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 const CreditTransaction = require('./creditTransaction.model')
 
 
@@ -15,7 +15,7 @@ async function update(entity) {
     try {
         const updatedEntity = {
             ...entity,
-            _id: ObjectId(entity._id),
+            _id: mongoose.Types.ObjectId(entity._id),
         }
 
         const updatedSale = await CreditTransaction.findByIdAndUpdate(
@@ -32,7 +32,6 @@ async function update(entity) {
 
 async function add(credits) {
     try {
-        // collection = await dbService.getCollection(COLLECTION_KEY)
         const savedCreditTransaction = await CreditTransaction.insertMany(credits)
         return savedCreditTransaction
     } catch (err) {
@@ -42,7 +41,7 @@ async function add(credits) {
 
 async function remove(entityId) {
     try {
-        await CreditTransaction.deleteOne({ '_id': ObjectId(entityId) })
+        await CreditTransaction.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
     } catch (err) {
         throw err
     }

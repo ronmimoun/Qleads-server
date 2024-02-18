@@ -14,7 +14,6 @@ const UserWaitlistSchema = new mongoose.Schema(
         email: { type: String, default: null },
         registeredAt: { type: Date, default: new Date() },
         approveStatus: { type: String, default: waitlistStatus.PENDING },
-        // isApproved: { type: Boolean, default: false },
     },
 );
 

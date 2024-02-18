@@ -1,5 +1,5 @@
 const Company = require('./company.model')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 
 async function get() {
     try {
@@ -13,7 +13,7 @@ async function get() {
 async function update(entity) {
     try {
         const companyToUpdate = {
-            _id: ObjectId(entity._id),
+            _id: mongoose.Types.ObjectId(entity._id),
             company: entity.company,
             category: entity.category,
             img: entity.img,
@@ -42,7 +42,7 @@ async function add(payload) {
 
 async function remove(companyId) {
     try {
-        await Company.deleteOne({ '_id': ObjectId(companyId) })
+        await Company.deleteOne({ '_id': mongoose.Types.ObjectId(companyId) })
         return companyId
     } catch (err) {
         throw err

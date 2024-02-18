@@ -1,5 +1,5 @@
 const JobTitle = require('./jobTitle.model')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 
 async function get() {
     try {
@@ -16,7 +16,7 @@ async function update(jobTitle) {
             title: jobTitle.title.toUpperCase(),
             value: jobTitle.value.toLowerCase(),
             img: jobTitle.img,
-            _id: ObjectId(jobTitle._id),
+            _id: mongoose.Types.ObjectId(jobTitle._id),
         }
 
         const updatedJobTitle = await JobTitle.findByIdAndUpdate(
@@ -48,7 +48,7 @@ async function add(payload) {
 
 async function remove(jobTitleId) {
     try {
-        await JobTitle.deleteOne({ '_id': ObjectId(jobTitleId) })
+        await JobTitle.deleteOne({ '_id': mongoose.Types.ObjectId(jobTitleId) })
         return jobTitleId
     } catch (err) {
         throw err
