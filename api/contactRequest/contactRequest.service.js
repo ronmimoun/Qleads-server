@@ -2,7 +2,7 @@
 const requestStatus = require('../../constants/requestStatus')
 
 // Model
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 const ContactRequest = require("./contactRequest.model");
 
 // Services
@@ -37,9 +37,8 @@ async function add(entity) {
 
 async function remove(entityId) {
     try {
-        await ContactRequest.deleteOne({ '_id': ObjectId(entityId) })
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // await collection.deleteOne({ '_id': ObjectId(entityId) })
+        await ContactRequest.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
+        return entityId
     } catch (err) {
         throw err
     }
@@ -50,7 +49,7 @@ async function update(entity) {
         // peek only updatable fields!
         const entityToSave = {
             ...entity,
-            _id: ObjectId(entity._id),
+            _id: mongoose.Types.ObjectId(entity._id),
             isApproved: _approveContact(entity),
             status: _approveContact(entity) ? 'ok' : 'rejected',
             updatedAt: new Date(),
@@ -61,9 +60,6 @@ async function update(entity) {
             { $set: entityToSave },
             { new: true } // Return the updated document
         );
-
-        // const collection = await dbService.getCollection(COLLECTION_KEY)
-        // await collection.updateOne({ '_id': entityToSave._id }, { $set: entityToSave })
         return updatedEntity
     } catch (err) {
         throw err

@@ -1,7 +1,7 @@
 const userService = require('./user.service')
 const User = require('./user.model')
 const Token = require('../../models/Token')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 
 //DELETE
 async function removeUser(req, res) {
@@ -102,7 +102,7 @@ async function getUserStats(req, res) {
 async function verifyUserToken(req, res) {
     try {
         const { id, token } = req.params
-        const user = await User.findOne({ _id: ObjectId(id) })
+        const user = await User.findOne({ _id: mongoose.Types.ObjectId(id) })
         if (!user) return res.status(400).send({ message: 'Invaild link' })
         const userToken = await Token.findOne({ userId: user._id, token })
         if (!userToken) return res.status(400).send({ message: 'Invalid link' })

@@ -1,5 +1,5 @@
 const Territory = require('./territory.model')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 
 async function get() {
     try {
@@ -14,7 +14,7 @@ async function update(entity) {
     try {
         const entityToSave = {
             ...entity,
-            _id: ObjectId(entity._id),
+            _id: mongoose.Types.ObjectId(entity._id),
         }
 
         const updatedTerritory = await Territory.findByIdAndUpdate(
@@ -43,7 +43,7 @@ async function add(entity) {
 
 async function remove(entityId) {
     try {
-        await Territory.deleteOne({ '_id': ObjectId(entityId) })
+        await Territory.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
     } catch (err) {
         throw err
     }

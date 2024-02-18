@@ -1,6 +1,6 @@
 const UserWaitlist = require('./userWaitlist.model')
 const User = require('../user/user.model')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 const WaitlistStatus = require('../../constants/waitlistStatus')
 
 async function get() {
@@ -16,11 +16,11 @@ async function update(user, status) {
     try {
         const userToApprove = {
             ...user,
-            _id: ObjectId(user._id),
+            _id: mongoose.Types.ObjectId(user._id),
             approveStatus: status
         }
-        await User.findByIdAndUpdate(ObjectId(user.userId), { $set: { approveStatus: status } })
-        const res = await UserWaitlist.findByIdAndUpdate(ObjectId(user._id), { ...userToApprove }, { new: true })
+        await User.findByIdAndUpdate(mongoose.Types.ObjectId(user.userId), { $set: { approveStatus: status } })
+        const res = await UserWaitlist.findByIdAndUpdate(mongoose.Types.ObjectId(user._id), { ...userToApprove }, { new: true })
         return res
     } catch (err) {
         throw err
@@ -33,7 +33,7 @@ async function add(user) {
             fullname: user.fullname,
             username: user.username,
             email: user.email,
-            userId: ObjectId(user._id),
+            userId: mongoose.Types.ObjectId(user._id),
         }
         const saveUserRequest = await UserWaitlist.create(userRequestToSave);
         return saveUserRequest
@@ -45,7 +45,7 @@ async function add(user) {
 async function remove(user) {
     try {
         await UserWaitlist.deleteOne({ _id: user._id })
-        await User.findByIdAndUpdate(ObjectId(user.userId), { $set: { approveStatus: WaitlistStatus.REJECTED } })
+        await User.findByIdAndUpdate(mongoose.Types.ObjectId(user.userId), { $set: { approveStatus: WaitlistStatus.REJECTED } })
     } catch (err) {
         throw err
     }

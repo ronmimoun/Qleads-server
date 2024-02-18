@@ -1,5 +1,5 @@
 const Credit = require('./credit.model')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 
 
 async function query() {
@@ -15,7 +15,7 @@ async function update(entity) {
     try {
         const updatedEntity = {
             ...entity,
-            _id: ObjectId(entity._id),
+            _id: mongoose.Types.ObjectId(entity._id),
         }
 
         const updatedCredit = await Credit.findByIdAndUpdate(
@@ -46,7 +46,7 @@ async function add(entity) {
 
 async function remove(entityId) {
     try {
-        await Credit.deleteOne({ '_id': ObjectId(entityId) })
+        await Credit.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
     } catch (err) {
         throw err
     }

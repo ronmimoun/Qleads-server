@@ -1,4 +1,4 @@
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 const Contact = require("./contact.model");
 const ContactRequest = require("../contactRequest/contactRequest.model")
 const emailService = require("../../services/email.service")
@@ -44,7 +44,7 @@ async function addMany(contact) {
 
 async function remove(entityId) {
     try {
-        await Contact.deleteOne({ '_id': ObjectId(entityId) })
+        await Contact.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
         return entityId
     } catch (err) {
         throw err
@@ -55,7 +55,7 @@ async function update(updatedContact) {
     try {
         // peek only updatable fields!
         const contactToSave = {
-            _id: ObjectId(updatedContact._id),
+            _id: mongoose.Types.ObjectId(updatedContact._id),
             company: updatedContact.company,
             desc: updatedContact.desc,
             country: updatedContact.country,
@@ -77,7 +77,7 @@ async function update(updatedContact) {
             numberOfRatings: updatedContact.numberOfRatings,
         }
         const savedContact = await Contact.findOneAndUpdate(
-            { _id: ObjectId(contactToSave._id) },
+            { _id: mongoose.Types.ObjectId(contactToSave._id) },
             { $set: contactToSave },
             { new: true }
         )
@@ -100,7 +100,7 @@ async function query(filterBy = {}) {
 
 async function getById(entityId) {
     try {
-        const entity = await Contact.findOne({ '_id': ObjectId(entityId) })
+        const entity = await Contact.findOne({ '_id': mongoose.Types.ObjectId(entityId) })
         return entity
     } catch (err) {
         throw err

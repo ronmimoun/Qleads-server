@@ -1,5 +1,5 @@
 const userService = require('../user/user.service')
-const ObjectId = require('mongoose').ObjectId
+const mongoose = require('mongoose')
 const ContactTransaction = require('./contactTransaction.model')
 
 async function get(filterBy) {
@@ -13,7 +13,7 @@ async function get(filterBy) {
 
 async function getById(userId) {
     try {
-        const user = await ContactTransaction.findOne({ '_id': ObjectId(userId) })
+        const user = await ContactTransaction.findOne({ '_id': mongoose.Types.ObjectId(userId) })
         delete user.password
         return user
     } catch (err) {
@@ -25,7 +25,7 @@ async function update(entity) {
     try {
         const updatedEntity = {
             ...entity,
-            _id: ObjectId(entity._id),
+            _id: mongoose.Types.ObjectId(entity._id),
         }
 
         const updatedContactTransaction = await ContactTransaction.findByIdAndUpdate(
@@ -52,7 +52,7 @@ async function add(transaction) {
 
 async function remove(entityId) {
     try {
-        await ContactTransaction.deleteOne({ '_id': ObjectId(entityId) })
+        await ContactTransaction.deleteOne({ '_id': mongoose.Types.ObjectId(entityId) })
         return entityId
     } catch (err) {
         throw err
