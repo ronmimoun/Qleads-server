@@ -1,5 +1,5 @@
 const Company = require('./company.model')
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 
 async function get() {
     try {

@@ -1,4 +1,4 @@
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 const Contact = require("./contact.model");
 const ContactRequest = require("../contactRequest/contactRequest.model")
 const emailService = require("../../services/email.service")

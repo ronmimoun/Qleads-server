@@ -1,5 +1,5 @@
 const Country = require('./country.model')
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 
 async function query() {
     try {

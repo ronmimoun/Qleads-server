@@ -1,6 +1,6 @@
 const UserWaitlist = require('./userWaitlist.model')
 const User = require('../user/user.model')
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 const WaitlistStatus = require('../../constants/waitlistStatus')
 
 async function get() {

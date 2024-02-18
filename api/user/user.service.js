@@ -1,5 +1,5 @@
 
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 const bcrypt = require('bcrypt')
 const Token = require('../../models/Token')
 
@@ -8,7 +8,6 @@ const authService = require('../auth/auth.service')
 const utilService = require('../../services/util.service')
 
 // Services
-const dbService = require('../../services/db.service')
 const purchaseStatus = require('../../constants/PurchaseStatus')
 const contactTransType = require('../../constants/contactTransType')
 

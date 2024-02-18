@@ -1,6 +1,5 @@
 const JobTitle = require('./jobTitle.model')
-const dbService = require('../../services/db.service')
-const ObjectId = require('mongodb').ObjectId
+const ObjectId = require('mongoose').ObjectId
 
 async function get() {
     try {

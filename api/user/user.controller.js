@@ -1,8 +1,7 @@
 const userService = require('./user.service')
-const dbService = require('../../services/db.service')
 const User = require('./user.model')
 const Token = require('../../models/Token')
-const { ObjectId } = require('mongodb')
+const ObjectId = require('mongoose').ObjectId
 
 //DELETE
 async function removeUser(req, res) {
