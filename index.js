@@ -32,22 +32,11 @@ const path = require("path");
 
 const corsOptions = {
     origin: [
+        // LOCALS:
+        'http://localhost:80',
+
+        // REMOTES:
         'http://165.227.166.214:80',
-        // 'http://127.0.0.1:3000',
-        // 'http://localhost:3000',
-        // 'http://localhost:3001',
-        // 'http://localhost:3030',
-        // 'https://164.92.245.54:80',
-        // 'https://qleads.info:80',
-        // 'https://qleads.info',
-        // 'http://qleads.info',
-        // 'http://qleads.info:80',
-        // 'https://qleads-web-x8xrg.ondigitalocean.app',
-        // 'https://backoffice-qleads-9tz5d.ondigitalocean.app',
-        // 'https://qleads.mobi',
-        // 'https://qleads.mobi:80',
-        // 'http://127.0.0.1:5173',
-        // 'http://127.0.0.1:5174',
     ],
     credentials: true
 }
