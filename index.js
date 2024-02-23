@@ -32,11 +32,9 @@ const { errorMiddleware } = require("./middlewares/globalError.middleware");
 
 const corsOptions = {
     origin: [
-        // LOCALS:
         'http://127.0.0.1:5173',
         'http://localhost:80',
-
-        // REMOTES:
+        'http://localhost:8080',
         'http://165.227.166.214:8000',
         'https://qleads.mobi',
         'https://qleads.mobi:80',
