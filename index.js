@@ -74,7 +74,7 @@ app.get('*', (req, res) => {
 });
 
 // const port = process.env.PORT || 8080
-const port = 8080
+const port = 80
 let sslServer = http.createServer(app)
 socketService.socketConnect(sslServer)
 
