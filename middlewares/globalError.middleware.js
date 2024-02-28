@@ -14,6 +14,5 @@ function errorMiddleware(
     });
 }
 
-module.exports = {
-    errorMiddleware
-} 
+export default errorMiddleware
+

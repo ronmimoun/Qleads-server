@@ -8,4 +8,4 @@ router.get('/:id', verifyToken, getByContactId)
 router.post('/getUsers', verifyTokenAndAdmin, getUsersWithMessages)
 router.post('/create', verifyToken, create)
 
-module.exports = router
+export default router

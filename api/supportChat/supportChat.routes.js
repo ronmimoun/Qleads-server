@@ -9,4 +9,4 @@ router.post('/create', verifyToken, create)
 router.post('/admin-msg', verifyTokenAndAdmin, addAdminMsg)
 
 
-module.exports = router
+export default router

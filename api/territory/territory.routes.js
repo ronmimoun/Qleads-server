@@ -1,10 +1,10 @@
-const express = require('express')
-const { remove, update, create, getJobTitles } = require('./territory.controller');
+import express from 'express';
+import { territoryController } from './territory.controller.js';
 const router = express.Router()
 
-router.post('/', getJobTitles)
-router.post('/create', create)
-router.post('/update/:id', update)
-router.post('/:id', remove)
+router.post('/', territoryController.getJobTitles)
+router.post('/create', territoryController.create)
+router.post('/update/:id', territoryController.update)
+router.post('/:id', territoryController.remove)
 
-module.exports = router
+export default router

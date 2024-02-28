@@ -6,5 +6,4 @@ router.post('/', query)
 router.post('/create', create)
 router.post('/:id', remove)
 router.post('/update/:id', update)
-
-module.exports = router
+export default router

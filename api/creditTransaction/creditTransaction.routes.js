@@ -7,5 +7,4 @@ router.get('/', verifyTokenAndAdmin, query)
 router.post('create', validateToken, create)
 router.post('/:id', remove)
 router.post('/update/:id', update)
-
-module.exports = router
+export default router

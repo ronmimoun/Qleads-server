@@ -8,4 +8,4 @@ router.post('/create', verifyTokenAndAdmin, create)
 router.post('/update/:id', verifyTokenAndAdmin, update)
 router.post('/:id', verifyTokenAndAdmin, remove)
 
-module.exports = router
+export default router

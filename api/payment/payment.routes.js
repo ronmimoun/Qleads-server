@@ -7,4 +7,4 @@ router.post('/create', verifyToken, createCreditPayment)
 router.post('/contact/purchase', verifyToken, createContactPurchase)
 router.post('/contact/remove', verifyToken, removeContactPurchase)
 
-module.exports = router
+export default router

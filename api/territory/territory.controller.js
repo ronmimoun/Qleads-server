@@ -1,4 +1,4 @@
-const territoryService = require("./territory.service")
+import territoryService from './territory.service.js'
 
 //CREATE
 async function create(req, res) {
@@ -44,9 +44,9 @@ async function getJobTitles(req, res) {
     }
 }
 
-module.exports = {
-    getJobTitles,
+export const territoryController = {
     create,
     remove,
-    update
-};
+    update,
+    getJobTitles,
+}

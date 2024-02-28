@@ -1,34 +1,83 @@
-const express = require("express");
-const http = require('http')
+import express from 'express';
+import http from 'http';
 const app = express();
-const dotenv = require("dotenv");
-const cookieParser = require('cookie-parser');
-const socketService = require("./services/socket.service")
+import dotenv from 'dotenv';
+import cookieParser from 'cookie-parser';
+import socketConnect from './services/socket.service.js';
+
 app.use(cookieParser());
 
 dotenv.config();
-const authRoute = require("./api/auth/auth.routes");
-const userRoute = require("./api/user/user.routes");
-const contactRoute = require("./api/contact/contact.routes");
-const uploadRoute = require('./api/upload/upload.routes')
-const categoryRoute = require("./api/category/category.routes")
-const jobTitleRoute = require("./api/jobTitle/jobTitle.routes")
-const companyRoute = require("./api/company/company.routes")
-const territoryRoute = require("./api/territory/territory.routes")
-const stripeRoute = require("./api/payment/payment.routes");
-const creditTransactionRoute = require("./api/creditTransaction/creditTransaction.routes")
-const contactTransactionRoute = require("./api/contactTransaction/contactTransaction.routes")
-const creditRoute = require("./api/credit/credit.routes")
-const contactRequestRoute = require("./api/contactRequest/contactRequest.routes")
-const userWaitlist = require("./api/userWaitlist/userWaitlist.routes")
-const country = require("./api/country/country.routes")
-const agentMessage = require("./api/agentMessage/agentMessage.routes")
-const feedbackRoute = require("./api/feedback/feedback.routes")
-const supportChatRoute = require("./api/supportChat/supportChat.routes")
+// const authRoute = require("./api/auth/auth.routes");
+import authRoute from "./api/auth/auth.routes.js";
 
-const cors = require("cors");
-const path = require("path");
-const { errorMiddleware } = require("./middlewares/globalError.middleware");
+// const userRoute = require("./api/user/user.routes.js");
+import userRoute from "./api/user/user.routes.js";
+
+// const contactRoute = require("./api/contact/contact.routes.js");
+import contactRoute from "./api/contact/contact.routes.js";
+
+// const uploadRoute = require('./api/upload/upload.routes.js')
+import uploadRoute from './api/upload/upload.routes.js';
+
+// const categoryRoute = require("./api/category/category.routes.js")
+import categoryRoute from "./api/category/category.routes.js";
+
+// const jobTitleRoute = require("./api/jobTitle/jobTitle.routes.js")
+import jobTitleRoute from "./api/jobTitle/jobTitle.routes.js";
+
+// const companyRoute = require("./api/company/company.routes.js")
+import companyRoute from "./api/company/company.routes.js";
+
+// const territoryRoute = require("./api/territory/territory.routes.js")
+import territoryRoute from "./api/territory/territory.routes.js";
+
+
+// const stripeRoute = require("./api/payment/payment.routes.js");
+import stripeRoute from "./api/payment/payment.routes.js";
+
+
+// const creditTransactionRoute = require("./api/creditTransaction/creditTransaction.routes.js")
+import creditTransactionRoute from "./api/creditTransaction/creditTransaction.routes.js";
+
+
+// const contactTransactionRoute = require("./api/contactTransaction/contactTransaction.routes.js")
+import contactTransactionRoute from "./api/contactTransaction/contactTransaction.routes.js";
+
+
+// const creditRoute = require("./api/credit/credit.routes.js")
+
+
+// const contactRequestRoute = require("./api/contactRequest/contactRequest.routes.js")
+import contactRequestRoute from "./api/contactRequest/contactRequest.routes.js";
+
+
+// const userWaitlist = require("./api/userWaitlist/userWaitlist.routes.js")
+import userWaitlist from "./api/userWaitlist/userWaitlist.routes.js";
+
+
+// const country = require("./api/country/country.routes.js")
+import country from "./api/country/country.routes.js";
+
+
+// const agentMessage = require("./api/agentMessage/agentMessage.routes.js")
+import agentMessage from "./api/agentMessage/agentMessage.routes.js";
+
+
+
+// const feedbackRoute = require("./api/feedback/feedback.routes.js")
+import feedbackRoute from "./api/feedback/feedback.routes.js";
+
+
+// const supportChatRoute = require("./api/supportChat/supportChat.routes.js")
+import supportChatRoute from "./api/supportChat/supportChat.routes.js";
+
+// const cors = require("cors");
+import cors from "cors";
+// const path = require("path");
+import path from "path";
+// const { errorMiddleware } = require("./middlewares/globalError.middleware");
+import errorMiddleware from "./middlewares/globalError.middleware.js";
 
 const corsOptions = {
     origin: [
@@ -74,7 +123,7 @@ app.get('*', (req, res) => {
 
 const port = process.env.PORT || 80
 let sslServer = http.createServer(app)
-socketService.socketConnect(sslServer)
+socketConnect(sslServer)
 
 sslServer.listen(port, () => {
     console.log('Listening on port ' + port)

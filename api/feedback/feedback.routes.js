@@ -7,5 +7,4 @@ router.post('/', verifyToken, get)
 router.get('/getUserFeedback', verifyToken, getUserFeedbacks)
 router.post('/create', verifyToken, create)
 
-
-module.exports = router
+export default router

@@ -42,7 +42,7 @@ async function _getAllSockets() {
     return sockets;
 }
 
-module.exports = {
-    socketConnect,
-    emitToUser
-}
+export default socketConnect
+
+// module.exports = {
+// }

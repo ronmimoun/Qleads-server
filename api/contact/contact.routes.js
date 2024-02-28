@@ -13,5 +13,4 @@ router.post('/download', verifyToken, sendContactDetailsEmail)
 router.post('/:id', verifyTokenAndAdmin, remove)
 router.get('/:category', verifyToken, getContactByCategories)
 router.get('/find/:id', verifyToken, getById)
-
-module.exports = router
+export default router

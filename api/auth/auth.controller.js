@@ -96,8 +96,7 @@ function getLoginToken(user) {
     return cryptr.encrypt(JSON.stringify({ _id: user._id, isAdmin: user.isAdmin }))
 }
 
-
-module.exports = {
+export const authController = {
     register,
     login,
     logout,

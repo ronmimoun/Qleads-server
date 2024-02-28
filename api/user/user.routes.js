@@ -1,4 +1,5 @@
-const express = require('express')
+import express from 'express';
+
 const { verifyTokenAndAdmin, verifyToken, verifyAdmin } = require('../../middlewares/requireAuth.middleware')
 const { removeUser, updateUser, getById, getUsers, createUser, getUserStats, changeUserPassByEmail, verifyUserToken } = require('./user.controller')
 const router = express.Router()
@@ -13,4 +14,4 @@ router.post('/find/:id', verifyToken, getById)
 router.post('/update_user_pass', changeUserPassByEmail)
 router.get('/:id/verify/:token', verifyUserToken)
 
-module.exports = router
+export default router

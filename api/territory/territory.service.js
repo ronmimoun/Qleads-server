@@ -49,7 +49,7 @@ async function remove(entityId) {
     }
 }
 
-module.exports = {
+export default {
     get,
     update,
     add,

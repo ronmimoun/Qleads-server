@@ -9,4 +9,4 @@ router.delete('/remove/:id', validateToken, remove)
 router.post('/update', verifyTokenAndAdmin, update)
 router.post('/reject', validateToken, reject)
 
-module.exports = router
+export default router

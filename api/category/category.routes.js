@@ -9,4 +9,4 @@ router.post('/update/:id', verifyTokenAndAdmin, update)
 router.post('/:id', verifyTokenAndAdmin, remove)
 router.get('/all-categories', getCategoriesManager)
 
-module.exports = router
+export default router
