@@ -25,6 +25,7 @@ const country = require("./api/country/country.routes")
 const agentMessage = require("./api/agentMessage/agentMessage.routes")
 const feedbackRoute = require("./api/feedback/feedback.routes")
 const supportChatRoute = require("./api/supportChat/supportChat.routes")
+const openAIRoute = require("./api/openAI/openAI.routes")
 
 const cors = require("cors");
 const path = require("path");
@@ -64,6 +65,7 @@ app.use("/api/country", country);
 app.use("/api/agentMessage", agentMessage);
 app.use("/api/feedback", feedbackRoute);
 app.use("/api/support_chat", supportChatRoute);
+app.use("/api/openai", openAIRoute);
 app.use(express.static('public'));
 
 app.use(errorMiddleware)
