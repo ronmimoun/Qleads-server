@@ -1,13 +1,30 @@
-const User = require("../user/user.model");
-const bcrypt = require('bcrypt')
-const Cryptr = require('cryptr')
+// const User = require("../user/user.model");
+import User from '../user/user.model.js';
+
+// const bcrypt = require('bcrypt')
+import bcrypt from 'bcrypt'
+
+// const Cryptr = require('cryptr')
+import Cryptr from 'cryptr';
+
 const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
 
-const userService = require('../user/user.service');
-const authService = require('./auth.service')
-const userWaitlistService = require('../userWaitlist/userWaitlist.service')
-const waitlistStatus = require("../../constants/waitlistStatus")
-const SimpleJWT = require("../../services/jwt.service")
+// const userService = require('../user/user.service');
+import userService from '../user/user.service.js';
+
+// const authService = require('./auth.service')
+import authService from './auth.service.js';
+
+
+// const userWaitlistService = require('../userWaitlist/userWaitlist.service')
+import userWaitlistService from './auth.service.js';
+
+
+// const waitlistStatus = require("../userWaitlist/userWaitlist.service")
+import waitlistStatus from '../userWaitlist/userWaitlist.service.js';
+
+// const SimpleJWT = require("../../services/jwt.service")
+import SimpleJWT from '../../services/jwt.service.js';
 
 
 // REGISTER

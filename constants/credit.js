@@ -1,6 +1,6 @@
 
 const CREDIT_VALUE = 20
 
-module.exports = {
+export {
     CREDIT_VALUE
 }

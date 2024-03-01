@@ -11,4 +11,5 @@ const ContactSaleSchema = new mongoose.Schema(
     },
 );
 
-module.exports = mongoose.model("ContactSale", ContactSaleSchema, "contact_sale");
+const ContactSale = mongoose.model("ContactSale", ContactSaleSchema, "contact_sale");
+export default ContactSale

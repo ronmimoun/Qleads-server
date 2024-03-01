@@ -1,10 +1,25 @@
-const Cryptr = require('cryptr')
+// const Cryptr = require('cryptr')
+import Cryptr from 'cryptr'
+
+import nodemailer from 'nodemailer'
+
+// const { getOTPEmail } = require('../../constants/email')
+import { getOTPEmail } from '../../constants/email.js';
+
+
+// const bcrypt = require('bcrypt')
+import bcrypt from 'bcrypt'
+
+
+// const User = require('../user/user.model')
+import User from '../user/user.model.js'
+
+
+// const utilService = require('../../services/util.service')
+import utilService from '../../services/util.service.js'
+
+
 const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
-const nodemailer = require("nodemailer")
-const { getOTPEmail } = require('../../constants/email')
-const bcrypt = require('bcrypt')
-const User = require('../user/user.model')
-const utilService = require('../../services/util.service')
 
 function validateToken(res) {
     try {
@@ -68,7 +83,7 @@ async function encodeUserPassword(password) {
     return hash
 }
 
-module.exports = {
+export default {
     validateToken,
     login,
     sendEmail,

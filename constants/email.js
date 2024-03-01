@@ -65,7 +65,7 @@ function _baseHeadHtml(title) {
 </head>`
 }
 
-module.exports = {
+export {
   getOTPEmail,
   getContactDetailsEmailHtml
 }

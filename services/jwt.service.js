@@ -1,5 +1,7 @@
-const jwt = require('jsonwebtoken')
-const dotenv = require("dotenv");
+// const jwt = require('jsonwebtoken')
+import jwt from 'jsonwebtoken';
+// const dotenv = require("dotenv");
+import dotenv from 'dotenv';
 
 dotenv.config();
 const secretOrPublicKey = process.env.SECRET_JWT_KEY;
@@ -24,4 +26,6 @@ class SimpleJWT {
     }
 }
 
-module.exports = SimpleJWT
+export default {
+    SimpleJWT
+}

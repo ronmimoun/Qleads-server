@@ -1,21 +1,52 @@
 
-const mongoose = require('mongoose')
-const bcrypt = require('bcrypt')
-const Token = require('../../models/Token')
+// const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 
-const emailService = require('../../services/email.service')
-const authService = require('../auth/auth.service')
-const utilService = require('../../services/util.service')
+// const bcrypt = require('bcrypt')
+import bcrypt from 'bcrypt';
+
+
+// const Token = require('../../models/Token')
+import Token from '../../models/Token.js';
+
+
+// const emailService = require('../../services/email.service')
+import emailService from '../../services/email.service.js';
+
+
+// const authService = require('../auth/auth.service')
+import authService from '../auth/auth.service.js';
+
+
+// const utilService = require('../../services/util.service')
+import utilService from '../../services/util.service.js';
 
 // Services
-const purchaseStatus = require('../../constants/PurchaseStatus')
-const contactTransType = require('../../constants/contactTransType')
+// const purchaseStatus = require('../../constants/PurchaseStatus')
+import purchaseStatus from '../../constants/PurchaseStatus.js';
+
+
+// const contactTransType = require('../../constants/contactTransType')
+import contactTransType from '../../constants/contactTransType.js';
+
+
 
 // Models
-const ContactSale = require('../../models/ContactSale')
-const Notification = require('../../models/Notification')
-const User = require('./user.model')
-const { CREDIT_VALUE } = require('../../constants/credit')
+// const ContactSale = require('../../models/ContactSale')
+import ContactSale from '../../models/ContactSale.js';
+
+
+// const Notification = require('../../models/Notification')
+import Notification from '../../models/Notification.js';
+
+
+
+// const User = require('./user.model')
+import User from './user.model.js';
+
+
+// const { CREDIT_VALUE } = require('../../constants/credit')
+import { CREDIT_VALUE } from '../../constants/credit.js';
 
 async function query(filterBy = {}) {
     const criteria = _buildCriteria(filterBy)
@@ -328,7 +359,7 @@ function _notificationType(type) {
     }
 }
 
-module.exports = {
+export default {
     query,
     getById,
     getByUsername,

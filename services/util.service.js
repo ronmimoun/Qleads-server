@@ -1,12 +1,5 @@
-const { CREDIT_VALUE } = require('../constants/credit')
-
-module.exports = {
-    getFirstLetterUppercase,
-    getUsersOneWeekAgo,
-    getTransactionsContactValueInCredit,
-    generateRandomNumber,
-    getContactValueInCredit
-}
+// const { CREDIT_VALUE } = require('../constants/credit')
+import { CREDIT_VALUE } from '../constants/credit.js'
 
 function getFirstLetterUppercase(str) {
     return str.charAt(0).toUpperCase() + str.slice(1);
@@ -37,4 +30,12 @@ function generateRandomNumber(length) {
         randomNumber += digits.charAt(randomIndex);
     }
     return randomNumber;
+}
+
+export default utilService = {
+    getFirstLetterUppercase,
+    getUsersOneWeekAgo,
+    getTransactionsContactValueInCredit,
+    generateRandomNumber,
+    getContactValueInCredit
 }
