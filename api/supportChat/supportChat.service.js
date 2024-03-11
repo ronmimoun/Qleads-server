@@ -1,6 +1,6 @@
 const SupportChat = require('./supportChat.model')
 const userService = require('../user/user.service')
-const apiUtilService = require('../../utils/api.utils')
+const apiUtilService = require('../../utils/api.util')
 
 async function get(chatId = '') {
     try {
