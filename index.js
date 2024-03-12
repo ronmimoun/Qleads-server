@@ -33,14 +33,14 @@ const { errorMiddleware } = require("./middlewares/globalError.middleware");
 
 const corsOptions = {
     origin: [
-        // LOCALS:
         'http://127.0.0.1:5173',
         'http://localhost:80',
-
-        // REMOTES:
+        'http://localhost:8080',
         'http://165.227.166.214:8000',
-        'https://qleads.mobi',
-        'https://qleads.mobi:80',
+        'http://qleads.mobi',
+        'http://167.172.173.255:8080',
+        'http://www.qleads.mobi:8080',
+        'http://www.qleads.mobi',
     ],
     credentials: true
 }
@@ -74,8 +74,8 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-// const port = process.env.PORT || 80
-const port = 8080
+// const port = process.env.PORT || 8080
+const port = 80
 let sslServer = http.createServer(app)
 socketService.socketConnect(sslServer)
 
