@@ -1,17 +1,15 @@
-const { openai } = require("./openAi.service")
+const openAIService = require("./openAi.service")
 
 
 async function send(req, res) {
     try {
-        const response = await openai.chat.completions.create({
-            model: 'gpt-3.5-turbo',
-            messages: [{ "role": "user", "content": "How are you?" }],
-            max_tokens: 100,
-        })
-        console.log('response', response)
+        const { message } = req.body
+        if (!message) throw res.status(406).json({ status: 'error', message: 'Message is missing' })
+
+        const chatResponse = await openAIService.sendMessage(message)
+        res.status(200).json({ status: 'ok', content: chatResponse })
     } catch (err) {
-        console.log('err', err)
-        res.status(500).json(err);
+        throw err
     }
 }
 
