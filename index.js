@@ -37,10 +37,9 @@ const corsOptions = {
         'http://localhost:8080',
         'http://165.227.166.214:8000',
         'https://qleads.mobi',
-        'https://qleads.mobi:80',
         'http://167.172.173.255:8080',
         'http://www.qleads.mobi:8080',
-        'http://www.qleads.mobi:80',
+        'http://www.qleads.mobi',
     ],
     credentials: true
 }
