@@ -79,6 +79,8 @@ const port = 80
 let sslServer = http.createServer(app)
 socketService.socketConnect(sslServer)
 
+console.log('process.env.NODE_ENV', process.env.NODE_ENV)
+
 sslServer.listen(port, () => {
     console.log('Listening on port ' + port)
     require('./services/db.service')
