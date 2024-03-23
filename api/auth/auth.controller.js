@@ -5,29 +5,28 @@ const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
 
 const userService = require('../user/user.service');
 const authService = require('./auth.service')
-const userWaitlistService = require('../userWaitlist/userWaitlist.service')
 const waitlistStatus = require("../../constants/waitlistStatus")
 const SimpleJWT = require("../../services/jwt.service")
+const AuthBL = require("./auth.bl");
 
 
 // REGISTER
-async function register(req, res) {
+async function register(req, res, next) {
     try {
         const user = req.body
-        if (!user.username || !user.password || !user.email) return Promise.reject('fullname, username and password are required!')
+        if (!user.username || !user.password || !user.email) return res.status(409).send({ status: 'error', message: 'fullname, username and password are required!' })
 
         const userInDB = await User.findOne({ email: user.email });
         if (userInDB) return res.status(409).send({ status: 'error', message: 'User with given email already exist!' })
 
-        let savedUser = await userService.create(user)
-
-        await userWaitlistService.add(savedUser)
+        const savedUser = await AuthBL.registerUser(user)
+        await AuthBL.sendTokenToRegisteredUser(savedUser)
 
         const loginToken = getLoginToken(savedUser)
         res.cookie('loginToken', loginToken, { sameSite: 'none', secure: true })
         res.status(201).json({ status: 'ok' });
     } catch (err) {
-        res.status(500).json(err);
+        next(err)
     }
 }
 
@@ -65,14 +64,6 @@ async function logout(req, res) {
         res.status(500).send({ status: 'error', message: 'Failed to logout' })
     }
 }
-
-// async function isAdmin(req, res) {
-//     try {
-//         res.send({ status: 'ok' })
-//     } catch (err) {
-//         res.status(500).send({ status: 'error', message: 'Failed to verify' })
-//     }
-// }
 
 async function recoveryEmail(req, res) {
     try {

@@ -4,7 +4,6 @@ const userWaitlistService = require("./userWaitlist.service")
 async function create(req, res) {
     try {
         const { user } = req.body
-        console.log('user', user)
 
         const savedRequest = await userWaitlistService.add(user)
         res.status(200).json({ status: 'ok', content: savedRequest });
