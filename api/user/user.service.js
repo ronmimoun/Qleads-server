@@ -83,12 +83,16 @@ async function update(updatedUser) {
             income: updatedUser.income,
             countryPreferences: updatedUser.countryPreferences,
             agentMessages: updatedUser.agentMessages,
+            verified: updatedUser.verified,
+            approveStatus: updatedUser.approveStatus,
         }
+
         const savedUser = await User.findOneAndUpdate(
             { _id: mongoose.Types.ObjectId(updatedUser._id) },
             { $set: userToSave },
             { new: true }
         )
+
         return savedUser;
     } catch (err) {
         throw err
@@ -133,21 +137,7 @@ async function create(user) {
             phone: user.phone
         }
 
-        const newUser = new User(content)
-        const savedUser = await newUser.save()
-
-        try {
-            const token = await new Token({
-                userId: savedUser._id,
-                token: utilService.generateRandomNumber(10)
-            })
-            const savedToken = await token.save()
-            const url = `https://qleads.mobi/api/users/${savedUser._id}/verify/${savedToken.token}`
-            await emailService(savedUser.email, "Verify Email", url)
-        } catch (err) {
-            throw new Error('Cannot send verification link')
-        }
-
+        const savedUser = new User(content).save()
         return savedUser
     } catch (err) {
         throw err

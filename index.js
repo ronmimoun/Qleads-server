@@ -25,6 +25,7 @@ const country = require("./api/country/country.routes")
 const agentMessage = require("./api/agentMessage/agentMessage.routes")
 const feedbackRoute = require("./api/feedback/feedback.routes")
 const supportChatRoute = require("./api/supportChat/supportChat.routes")
+const openAIRoute = require("./api/openAI/openAI.routes")
 
 const cors = require("cors");
 const path = require("path");
@@ -32,14 +33,14 @@ const { errorMiddleware } = require("./middlewares/globalError.middleware");
 
 const corsOptions = {
     origin: [
-        // LOCALS:
         'http://127.0.0.1:5173',
         'http://localhost:80',
-
-        // REMOTES:
+        'http://localhost:8080',
         'http://165.227.166.214:8000',
-        'https://qleads.mobi',
-        'https://qleads.mobi:80',
+        'http://qleads.mobi',
+        'http://167.172.173.255:8080',
+        'http://www.qleads.mobi:8080',
+        'http://www.qleads.mobi',
     ],
     credentials: true
 }
@@ -64,6 +65,7 @@ app.use("/api/country", country);
 app.use("/api/agentMessage", agentMessage);
 app.use("/api/feedback", feedbackRoute);
 app.use("/api/support_chat", supportChatRoute);
+app.use("/api/openai", openAIRoute);
 app.use(express.static('public'));
 
 app.use(errorMiddleware)

@@ -6,7 +6,6 @@ const secretOrPublicKey = process.env.SECRET_JWT_KEY;
 
 class SimpleJWT {
     decode(token) {
-        console.log('token', token)
         return jwt.decode(token);
     }
 
