@@ -74,12 +74,9 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
-// const port = process.env.PORT || 8080
-const port = 80
+const port = process.env.PORT || 8080
 let sslServer = http.createServer(app)
 socketService.socketConnect(sslServer)
-
-console.log('process.env.NODE_ENV', process.env.NODE_ENV)
 
 sslServer.listen(port, () => {
     console.log('Listening on port ' + port)

@@ -1,7 +1,6 @@
 const userService = require('./user.service')
 const User = require('./user.model')
-const Token = require('../../models/Token')
-const mongoose = require('mongoose')
+const UserBL = require('./user.bl')
 
 //DELETE
 async function removeUser(req, res) {
@@ -99,22 +98,18 @@ async function getUserStats(req, res) {
 }
 
 // VERIFY_TOKEN
-async function verifyUserToken(req, res) {
+async function verifyUserToken(req, res, next) {
     try {
         const { id, token } = req.params
-        const user = await User.findOne({ _id: mongoose.Types.ObjectId(id) })
-        if (!user) return res.status(400).send({ message: 'Invaild link' })
-        const userToken = await Token.findOne({ userId: user._id, token })
-        if (!userToken) return res.status(400).send({ message: 'Invalid link' })
-        await User.findOneAndUpdate(
-            { _id: user._id },
-            { $set: { verified: true } },
-            { new: true }
-        );
+
+        const user = await UserBL.getUserById(id)
+        const userToken = await UserBL.getUserToken(user._id, token)
+        await UserBL.approveUserToken(user._id)
         await userToken.remove()
-        res.status(200).send({ message: 'Email verified successfully' })
+
+        res.status(200).send({ status: 'ok', message: 'Email verified successfully' })
     } catch (error) {
-        res.status(500).json(error);
+        next(error);
     }
 }
 

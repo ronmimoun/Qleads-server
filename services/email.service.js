@@ -27,6 +27,12 @@ async function sendEmail(message) {
     }
 }
 
+// Mail Options
+// from: 'your-email@gmail.com',
+// to: 'recipient@example.com', // Specify at least one recipient here
+// subject: 'Test Email',
+// text: 'This is a test email.'
+
 module.exports = {
     sendEmail,
 }
