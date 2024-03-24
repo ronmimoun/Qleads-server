@@ -35,6 +35,7 @@ async function login(req, res) {
     try {
         const { username, password } = req.body
         const user = await authService.login(username)
+        console.log('user', user)
 
         if (!user) return res.status(401).json({ message: "User not found", status: 'error' })
         const match = await bcrypt.compare(password, user.password)
