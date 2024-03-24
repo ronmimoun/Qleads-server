@@ -17,7 +17,7 @@ async function createUserToken(savedUser) {
 
 async function getTokenByUserId(userId) {
     try {
-        const token = await Token.findOne({ '_id': mongoose.Types.ObjectId(userId) })
+        const token = await Token.findOne({ 'userId': mongoose.Types.ObjectId(userId) })
         return token
     } catch (error) {
         throw error
