@@ -31,7 +31,7 @@ async function register(req, res, next) {
 }
 
 //LOGIN
-async function login(req, res) {
+async function login(req, res, next) {
     try {
         const { username, password } = req.body
         const user = await authService.login(username)
@@ -52,7 +52,7 @@ async function login(req, res) {
 
         res.status(200).json({ status: 'ok', content: { user, jwtToken } });
     } catch (err) {
-        res.status(500).json(err);
+        next(err)
     }
 }
 
