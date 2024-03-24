@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Token = require('../models/Token');
 const utilService = require('./util.service');
 
@@ -14,7 +15,17 @@ async function createUserToken(savedUser) {
     }
 }
 
+async function getTokenByUserId(userId) {
+    try {
+        const token = await Token.findOne({ '_id': mongoose.Types.ObjectId(userId) })
+        return token
+    } catch (error) {
+        throw error
+    }
+}
+
 
 module.exports = {
-    createUserToken
+    createUserToken,
+    getTokenByUserId
 }

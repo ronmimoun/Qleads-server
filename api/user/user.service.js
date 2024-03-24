@@ -33,7 +33,7 @@ async function query(filterBy = {}) {
 
 async function getById(userId) {
     try {
-        if (!userId) throw new Error('User ID is missing')
+        if (!userId) throw new Error({ status: 'error', message: 'User ID is missing' })
 
         const user = await User.findOne({ '_id': mongoose.Types.ObjectId(userId) })
         if (user) delete user.password

@@ -25,6 +25,12 @@ class AuthBL {
             throw err
         }
     }
+
+    static async sendEmailVerification(userId) {
+        const token = await tokenService.getTokenByUserId(userId)
+        const url = `${TOKENS_URL.REGISTERED_USER}${userId}/verify/${token.token}`
+        await emailService.sendEmail({ to: user.email, subject: "Verify Email", text: url })
+    }
 }
 
 module.exports = AuthBL
