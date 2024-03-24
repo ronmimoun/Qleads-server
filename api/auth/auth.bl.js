@@ -26,9 +26,9 @@ class AuthBL {
         }
     }
 
-    static async sendEmailVerification(userId) {
-        const token = await tokenService.getTokenByUserId(userId)
-        const url = `${TOKENS_URL.REGISTERED_USER}${userId}/verify/${token.token}`
+    static async sendEmailVerification(user) {
+        const token = await tokenService.getTokenByUserId(user._id)
+        const url = `${TOKENS_URL.REGISTERED_USER}${user._id}/verify/${token.token}`
         await emailService.sendEmail({ to: user.email, subject: "Verify Email", text: url })
     }
 }

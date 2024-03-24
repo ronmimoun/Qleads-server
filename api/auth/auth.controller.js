@@ -40,7 +40,7 @@ async function login(req, res, next) {
         const match = await bcrypt.compare(password, user.password)
         if (!match) return res.status(401).json({ message: "Wrong credentials!", status: 'error' })
         else if (!user.verified) {
-            await AuthBL.sendEmailVerification(user._id)
+            await AuthBL.sendEmailVerification(user)
             return res.status(401).json({ message: 'Please verify your account first!', status: 'error' })
         }
         else if (user.approveStatus !== waitlistStatus.APPROVED) {
