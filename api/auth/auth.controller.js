@@ -13,13 +13,13 @@ const AuthBL = require("./auth.bl");
 // REGISTER
 async function register(req, res, next) {
     try {
-        const user = req.body
-        if (!user.username || !user.password || !user.email) return res.status(409).send({ status: 'error', message: 'fullname, username and password are required!' })
+        const userCredentials = req.body
+        if (!userCredentials.username || !userCredentials.password || !userCredentials.email) return res.status(409).send({ status: 'error', message: 'fullname, username and password are required!' })
 
-        const userInDB = await User.findOne({ email: user.email });
+        const userInDB = await User.findOne({ email: userCredentials.email });
         if (userInDB) return res.status(409).send({ status: 'error', message: 'User with given email already exist!' })
 
-        const savedUser = await AuthBL.registerUser(user)
+        const savedUser = await AuthBL.registerUser(userCredentials)
         await AuthBL.sendTokenToRegisteredUser(savedUser)
 
         const loginToken = getLoginToken(savedUser)

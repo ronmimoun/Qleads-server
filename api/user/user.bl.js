@@ -3,6 +3,7 @@ const User = require("./user.model")
 const Token = require("../../models/Token")
 const userService = require('./user.service');
 const waitlistStatus = require('../../constants/waitlistStatus');
+const userWaitlistService = require('../userWaitlist/userWaitlist.service');
 
 
 class UserBL {
@@ -21,6 +22,7 @@ class UserBL {
 
     static async approveUserToken(userId) {
         const updatedUser = userService.update({ _id: userId, verified: true, approveStatus: waitlistStatus.APPROVED })
+        await userWaitlistService.update(userId, waitlistStatus.APPROVED)
         return updatedUser;
     }
 
