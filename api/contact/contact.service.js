@@ -1,11 +1,20 @@
-const mongoose = require('mongoose')
-const Contact = require("./contact.model");
-const ContactRequest = require("../contactRequest/contactRequest.model")
-const emailService = require("../../services/email.service")
-const dotenv = require("dotenv");
-const { getContactDetailsEmailHtml } = require("../../constants/email")
-const userService = require("../user/user.service")
+// const mongoose = require('mongoose')
+// const Contact = require("./contact.model");
+// const ContactRequest = require("../contactRequest/contactRequest.model")
+// const emailService = require("../../services/email.service")
+// const dotenv = require("dotenv");
+// const { getContactDetailsEmailHtml } = require("../../constants/email")
+// const userService = require("../user/user.service")
+
+import mongoose from 'mongoose';
+import Contact from './contact.model.js';
+import contactRequest from '../contactRequest/contactRequest.model.js';
+import emailService from '../../services/email.service.js';
+import dotenv from 'dotenv';
+import { getContactDetailsEmailHtml } from '../../constants/email.js';
+import userService from '../user/user.service.js';
 dotenv.config()
+
 
 async function add(contactToAdd) {
     try {
@@ -214,8 +223,7 @@ function _buildCriteria(filterBy) {
     return criteria
 }
 
-
-module.exports = {
+export default {
     query,
     getById,
     remove,

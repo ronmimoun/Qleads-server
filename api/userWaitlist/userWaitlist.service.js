@@ -1,11 +1,16 @@
-const UserWaitlist = require('./userWaitlist.model')
-const User = require('../user/user.model')
-const mongoose = require('mongoose')
-const WaitlistStatus = require('../../constants/waitlistStatus')
+// const UserWaitlist = require('./userWaitlist.model')
+// const User = require('../user/user.model')
+// const mongoose = require('mongoose')
+// const WaitlistStatus = require('../../constants/waitlistStatus')
+
+import UserWaitlistModel from './userWaitlist.model.js'
+import User from '../user/user.model.js'
+import mongoose from 'mongoose'
+import WaitlistStatus from '../../constants/waitlistStatus.js';
 
 async function get() {
     try {
-        const users = await UserWaitlist.find({})
+        const users = await UserWaitlistModel.find({})
         return users
     } catch (err) {
         throw err
@@ -20,7 +25,7 @@ async function update(user, status) {
             approveStatus: status
         }
         await User.findByIdAndUpdate(mongoose.Types.ObjectId(user.userId), { $set: { approveStatus: status } })
-        const res = await UserWaitlist.findByIdAndUpdate(mongoose.Types.ObjectId(user._id), { ...userToApprove }, { new: true })
+        const res = await UserWaitlistModel.findByIdAndUpdate(mongoose.Types.ObjectId(user._id), { ...userToApprove }, { new: true })
         return res
     } catch (err) {
         throw err
@@ -35,7 +40,7 @@ async function add(user) {
             email: user.email,
             userId: mongoose.Types.ObjectId(user._id),
         }
-        const saveUserRequest = await UserWaitlist.create(userRequestToSave);
+        const saveUserRequest = await UserWaitlistModel.create(userRequestToSave);
         return saveUserRequest
     } catch (err) {
         throw err
@@ -44,15 +49,14 @@ async function add(user) {
 
 async function remove(user) {
     try {
-        await UserWaitlist.deleteOne({ _id: user._id })
+        await UserWaitlistModel.deleteOne({ _id: user._id })
         await User.findByIdAndUpdate(mongoose.Types.ObjectId(user.userId), { $set: { approveStatus: WaitlistStatus.REJECTED } })
     } catch (err) {
         throw err
     }
 }
 
-
-module.exports = {
+export default {
     get,
     update,
     add,

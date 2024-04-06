@@ -1,10 +1,16 @@
-const Cryptr = require('cryptr')
-const User = require('../api/user/user.model')
-const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
-const SimpleJWT = require("../services/jwt.service")
-const mongoose = require("mongoose")
+// const Cryptr = require('cryptr')
+// const User = require('../api/user/user.model')
+// const SimpleJWT = require("../services/jwt.service")
+// const mongoose = require("mongoose")
 
-function validateToken(req, res, next) {
+const cryptr = new Cryptr(process.env.SECRET1 || 'Secret-Puk-1234')
+import Cryptr from 'cryptr';
+import User from '../api/user/user.model.js';
+import SimpleJWT from '../services/jwt.service.js';
+import mongoose from 'mongoose';
+
+
+export function validateToken(req, res, next) {
     const token = req.cookies.loginToken
     if (!token) return res.status(401).json({ status: 'error', message: "You are not authenticated!" })
 
@@ -17,7 +23,7 @@ function validateToken(req, res, next) {
     return res.status(401).json({ status: 'error', message: "You are not authenticated!" });
 }
 
-const verifyTokenAndAdmin = (req, res, next) => {
+export const verifyTokenAndAdmin = (req, res, next) => {
     verifyToken(req, res, () => {
         if (req.user.isAdmin) {
             next();
@@ -27,7 +33,7 @@ const verifyTokenAndAdmin = (req, res, next) => {
     });
 };
 
-const verifyToken = async (req, res, next) => {
+export const verifyToken = async (req, res, next) => {
     try {
         const jwtInstance = new SimpleJWT()
         let token = req.headers['authorization'] || req.headers['Authorization']
@@ -49,10 +55,3 @@ const verifyToken = async (req, res, next) => {
         return res.status(401).json({ status: 'error', message: 'Authentication failed: invalid token' });
     }
 };
-
-module.exports = {
-    verifyToken,
-    verifyTokenAndAdmin,
-    validateToken,
-};
-

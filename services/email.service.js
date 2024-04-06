@@ -1,6 +1,9 @@
-const nodemailer = require("nodemailer")
-const dotenv = require("dotenv")
+// const nodemailer = require("nodemailer")
+// const dotenv = require("dotenv")
+import nodemailer from "nodemailer";
+import dotenv from "dotenv";
 dotenv.config()
+
 
 async function sendEmail(message) {
     try {
@@ -27,6 +30,6 @@ async function sendEmail(message) {
     }
 }
 
-module.exports = {
+export default {
     sendEmail,
 }

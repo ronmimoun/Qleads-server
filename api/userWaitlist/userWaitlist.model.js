@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-const waitlistStatus = require("../../constants/waitlistStatus")
+// const mongoose = require("mongoose");
+// const waitlistStatus = require("../../constants/waitlistStatus")
+import mongoose from 'mongoose';
+import waitlistStatus from '../../constants/waitlistStatus.js';
 
 const UserWaitlistSchema = new mongoose.Schema(
     {
@@ -17,4 +19,10 @@ const UserWaitlistSchema = new mongoose.Schema(
     },
 );
 
-module.exports = mongoose.model("UserWaitlist", UserWaitlistSchema, 'user_waitlist');
+const UserWaitlistModel = mongoose.model("UserWaitlist", UserWaitlistSchema, 'user_waitlist');
+
+export default {
+    UserWaitlistModel
+}
+
+// module.exports = mongoose.model("UserWaitlist", UserWaitlistSchema, 'user_waitlist');

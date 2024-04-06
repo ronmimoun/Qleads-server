@@ -1,6 +1,9 @@
 // Services
-const contactService = require('./contact.service')
+// const contactService = require('./contact.service')
 const { getFirstLetterUppercase } = require('../../services/util.service');
+
+import contactService from './contact.service.js';
+import utilService from '../../services/util.service.js';
 
 // GET USER CONTACTS 
 async function getUserContacts(req, res) {
@@ -88,7 +91,7 @@ async function getContacts(req, res) {
 async function getContactByCategories(req, res) {
     const cat = req.params.category
     try {
-        const contacts = await contactService.getContactByCategories(getFirstLetterUppercase(cat))
+        const contacts = await contactService.getContactByCategories(utilService.getFirstLetterUppercase(cat))
         res.status(200).json({ status: 'ok', content: contacts })
     } catch (err) {
         res.status(500).json(err);

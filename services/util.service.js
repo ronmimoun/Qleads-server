@@ -32,7 +32,7 @@ function generateRandomNumber(length) {
     return randomNumber;
 }
 
-export default utilService = {
+export default {
     getFirstLetterUppercase,
     getUsersOneWeekAgo,
     getTransactionsContactValueInCredit,

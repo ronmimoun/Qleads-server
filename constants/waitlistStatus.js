@@ -4,7 +4,7 @@ const APPROVED = 'approved'
 const PENDING = 'pending'
 const REJECTED = 'rejected'
 
-module.exports = {
+export default {
     APPROVED,
     PENDING,
     REJECTED,

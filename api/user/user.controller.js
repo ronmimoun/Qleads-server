@@ -1,10 +1,15 @@
-const userService = require('./user.service')
-const User = require('./user.model')
-const Token = require('../../models/Token')
-const mongoose = require('mongoose')
+// const userService = require('./user.service')
+// const User = require('./user.model')
+// const Token = require('../../models/Token')
+// const mongoose = require('mongoose')
+
+import mongoose from 'mongoose';
+import Token from '../../models/Token.js';
+import User from './user.model.js';
+import userService from './user.service.js';
 
 //DELETE
-async function removeUser(req, res) {
+export async function removeUser(req, res) {
     try {
         const { userId } = req.body
         await userService.remove(userId)
@@ -15,7 +20,7 @@ async function removeUser(req, res) {
 }
 
 //UPDATE
-async function updateUser(req, res) {
+export async function updateUser(req, res) {
     try {
         const updatedUser = req.body
         const savedUser = await userService.update(updatedUser)
@@ -26,7 +31,7 @@ async function updateUser(req, res) {
 }
 
 //GET USER
-async function getById(req, res) {
+export async function getById(req, res) {
     try {
         const { userId } = req.body
         const user = await userService.getById(userId)
@@ -37,7 +42,7 @@ async function getById(req, res) {
 }
 
 //GET ALL USER
-async function getUsers(req, res) {
+export async function getUsers(req, res) {
     try {
         const filterBy = req.body
         const users = await userService.query(filterBy)
@@ -48,7 +53,7 @@ async function getUsers(req, res) {
 }
 
 // CREATE USER
-async function createUser(req, res) {
+export async function createUser(req, res) {
     try {
         const userCred = req.body
         const savedUser = await userService.add(userCred)
@@ -59,7 +64,7 @@ async function createUser(req, res) {
 }
 
 // CHANGE USER PASSWORD
-async function changeUserPassByEmail(req, res) {
+export async function changeUserPassByEmail(req, res) {
     try {
         const { email, password } = req.body
         const result = await userService.changeUserPassByEmail(email, password)
@@ -70,7 +75,7 @@ async function changeUserPassByEmail(req, res) {
 }
 
 //GET USER STATS
-async function getUserStats(req, res) {
+export async function getUserStats(req, res) {
     const date = new Date();
     const lastYear = new Date(date.setFullYear(date.getFullYear() - 1));
     try {
@@ -99,7 +104,7 @@ async function getUserStats(req, res) {
 }
 
 // VERIFY_TOKEN
-async function verifyUserToken(req, res) {
+export async function verifyUserToken(req, res) {
     try {
         const { id, token } = req.params
         const user = await User.findOne({ _id: mongoose.Types.ObjectId(id) })
@@ -116,15 +121,4 @@ async function verifyUserToken(req, res) {
     } catch (error) {
         res.status(500).json(error);
     }
-}
-
-module.exports = {
-    removeUser,
-    updateUser,
-    getById,
-    getUsers,
-    createUser,
-    getUserStats,
-    changeUserPassByEmail,
-    verifyUserToken
 }

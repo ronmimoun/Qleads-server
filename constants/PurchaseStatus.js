@@ -3,7 +3,7 @@
 const success = 'success'
 const failed = 'failed'
 
-module.exports = {
+export default {
     success,
     failed
 }

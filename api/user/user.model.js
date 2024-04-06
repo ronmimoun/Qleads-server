@@ -1,5 +1,7 @@
-const mongoose = require("mongoose");
-const waitlistStatus = require("../../constants/waitlistStatus");
+// const mongoose = require("mongoose");
+// const waitlistStatus = require("../../constants/waitlistStatus");
+import mongoose from 'mongoose';
+import waitlistStatus from '../../constants/waitlistStatus.js';
 
 const UserSchema = new mongoose.Schema(
     {

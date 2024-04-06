@@ -1,7 +1,6 @@
 import express from 'express';
-
-const { verifyTokenAndAdmin, verifyToken, verifyAdmin } = require('../../middlewares/requireAuth.middleware')
-const { removeUser, updateUser, getById, getUsers, createUser, getUserStats, changeUserPassByEmail, verifyUserToken } = require('./user.controller')
+import { verifyTokenAndAdmin, verifyToken } from '../../middlewares/requireAuth.middleware.js';
+import { removeUser, updateUser, getById, getUsers, createUser, getUserStats, changeUserPassByEmail, verifyUserToken } from './user.controller.js';
 const router = express.Router()
 
 
