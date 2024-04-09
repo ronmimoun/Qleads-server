@@ -27,7 +27,19 @@ const UserSchema = new mongoose.Schema(
         verified: { type: Boolean, default: false },
         approveStatus: { type: String, default: waitlistStatus.PENDING },
         countryPreferences: { type: Array, default: [] },
-        agentMessages: { type: Array, default: [] }
+        agentMessages: { type: Array, default: [] },
+        contactDisclosure: {
+            type: {
+                revealCount: Number,
+                contactsRevealed: Array,
+                nextRevealCountReset: Date,
+            },
+            default: {
+                revealCount: 5,
+                contactsRevealed: [],
+                nextRevealCountReset: null,
+            },
+        }
     },
     {
         toJSON: {
