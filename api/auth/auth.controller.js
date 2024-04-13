@@ -31,7 +31,7 @@ async function register(req, res, next) {
 }
 
 //LOGIN
-async function login(req, res) {
+async function login(req, res, next) {
     try {
         const { username, password } = req.body
         const user = await authService.login(username)
@@ -46,13 +46,16 @@ async function login(req, res) {
         else if (user.approveStatus !== waitlistStatus.APPROVED) {
             return res.status(401).json({ message: 'Please wait for account approval', status: 'error' })
         }
-        delete user.password
-        const jwtInstance = new SimpleJWT()
-        const jwtToken = jwtInstance.encode({ userId: user._id })
 
-        res.status(200).json({ status: 'ok', content: { user, jwtToken } });
+        const updatedUser = await AuthBL.checkAndUpdateUserFieldReset(user)
+
+        delete updatedUser.password
+        const jwtInstance = new SimpleJWT()
+        const jwtToken = jwtInstance.encode({ userId: updatedUser._id })
+
+        res.status(200).json({ status: 'ok', content: { user: updatedUser, jwtToken } });
     } catch (err) {
-        res.status(500).json(err);
+        next(err)
     }
 }
 

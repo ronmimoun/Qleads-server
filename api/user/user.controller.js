@@ -1,6 +1,7 @@
 const userService = require('./user.service')
 const User = require('./user.model')
 const UserBL = require('./user.bl')
+const { genericError } = require('../../models/errors/genericError')
 
 //DELETE
 async function removeUser(req, res) {
@@ -113,6 +114,25 @@ async function verifyUserToken(req, res, next) {
     }
 }
 
+async function updateUserContactDisclosure(req, res, next) {
+    try {
+        const { revealCount } = req.body;
+        const userId = req.user._id;
+
+        if (revealCount === 0) {
+            await UserBL.updateNextRevealCountReset(userId)
+            return genericError(res, 403, "No more reveals")
+        } else if (!revealCount) {
+            return genericError(res, 500, "Something went wrong")
+        }
+
+        const updatedUser = await UserBL.updateUserContactDisclosure(userId, req.body)
+        res.status(200).send({ status: 'ok', content: updatedUser })
+    } catch (error) {
+        next(error)
+    }
+}
+
 module.exports = {
     removeUser,
     updateUser,
@@ -121,5 +141,6 @@ module.exports = {
     createUser,
     getUserStats,
     changeUserPassByEmail,
-    verifyUserToken
+    verifyUserToken,
+    updateUserContactDisclosure
 }

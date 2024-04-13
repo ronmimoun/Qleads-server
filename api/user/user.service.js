@@ -292,6 +292,24 @@ const isUserHasCredits = (transactions, user) => {
     else return false
 }
 
+const resetUserContactDisclosureRevealCount = async (userId) => {
+    const revealCount = 5
+    try {
+        const updatedUser = await User.findOneAndUpdate(
+            { _id: userId },
+            {
+                $set: { ['contactDisclosure.revealCount']: revealCount, ['contactDisclosure.nextRevealCountReset']: null }
+            },
+            { new: true }
+        )
+        return updatedUser
+    } catch (error) {
+        throw error
+    }
+}
+
+
+
 function _buildCriteria(filterBy) {
     const criteria = {}
     if (filterBy.createdAt) {
@@ -336,4 +354,5 @@ module.exports = {
     isUserHasCredits,
     updateAgentCredits,
     addUserPruchase,
+    resetUserContactDisclosureRevealCount,
 }
