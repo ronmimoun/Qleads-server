@@ -195,6 +195,36 @@ async function sendContactDetailsEmail(contactId, userId) {
     }
 }
 
+async function updateSubmittedInfoSearch(payload) {
+    try {
+        const { submittedInfoSearch, contactId } = payload;
+
+        const updatedContact = await Contact.findOneAndUpdate(
+            { _id: mongoose.Types.ObjectId(contactId) },
+            { $set: { 'llmInformation.submittedInfoSearch': submittedInfoSearch } },
+            { new: true }
+        )
+        return updatedContact
+    } catch (error) {
+        throw error
+    }
+}
+
+async function updateLastGeneratedInfoSearch(payload) {
+    try {
+        const { lastGeneratedInfoSearch, contactId } = payload;
+
+        const updatedContact = await Contact.findOneAndUpdate(
+            { _id: mongoose.Types.ObjectId(contactId) },
+            { $set: { 'llmInformation.lastGeneratedInfoSearch': lastGeneratedInfoSearch } },
+            { new: true }
+        )
+        return updatedContact
+    } catch (error) {
+        throw error
+    }
+}
+
 function _buildCriteria(filterBy) {
     const criteria = {}
 
@@ -228,4 +258,6 @@ module.exports = {
     updateContactFeedback,
     getNotRequestedContacts,
     sendContactDetailsEmail,
+    updateSubmittedInfoSearch,
+    updateLastGeneratedInfoSearch,
 }

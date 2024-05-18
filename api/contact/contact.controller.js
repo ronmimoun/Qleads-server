@@ -117,6 +117,26 @@ async function sendContactDetailsEmail(req, res) {
     }
 }
 
+async function updateSubmittedInfoSearch(req, res, next) {
+    try {
+        const { submittedInfoSearch, contactId } = req.body;
+        const updatedContact = await contactService.updateSubmittedInfoSearch({ submittedInfoSearch, contactId });
+        res.status(200).json({ status: 'ok', content: updatedContact })
+    } catch (err) {
+        next(err)
+    }
+}
+
+async function updateLastGeneratedInfoSearch(req, res, next) {
+    try {
+        const { lastGeneratedInfoSearch, contactId } = req.body;
+        const updatedContact = await contactService.updateLastGeneratedInfoSearch({ lastGeneratedInfoSearch, contactId });
+        res.status(200).json({ status: 'ok', content: updatedContact })
+    } catch (err) {
+        next(err)
+    }
+}
+
 module.exports = {
     add,
     addMany,
@@ -128,4 +148,6 @@ module.exports = {
     getContactByCategories,
     getNotRequestedContacts,
     sendContactDetailsEmail,
+    updateSubmittedInfoSearch,
+    updateLastGeneratedInfoSearch,
 }
