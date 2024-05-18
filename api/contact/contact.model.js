@@ -21,6 +21,12 @@ const ContactSchema = new mongoose.Schema(
         transactionHistory: { type: Array, required: false, default: [] },
         averageRating: { type: Number, default: 0 },
         numberOfRatings: { type: Number, default: 0 },
+        llmInformation: {
+            type: Object, required: false, default: {
+                submittedInfoSearch: null,
+                lastGeneratedInfoSearch: null,
+            }
+        }
     },
 );
 
